@@ -11,8 +11,8 @@ def prediction():
     Faz uma requisição à API para prever a probabilidade de fraude.
     """
 
-    st.markdown("<h3 style='text-align: center;'>Previsão de Fraude</h3>", unsafe_allow_html=True)
-    st.markdown("<h6 style='text-align: center;'>Utilize a API para prever a probabilidade de fraude em notas fiscais</h6>", unsafe_allow_html=True)
+    st.markdown("<h3 style='text-align: center;'>Detecção de Notas Fiscais com Impostos Incorretos</h3>", unsafe_allow_html=True)
+    st.markdown("<h6 style='text-align: center;'>Utilize a API para classificar notas fiscais</h6>", unsafe_allow_html=True)
 
     # Formulário para inserção dos dados
     with st.form("fraud_prediction_form"):
