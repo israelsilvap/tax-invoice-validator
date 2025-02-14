@@ -17,7 +17,7 @@ def prediction():
     # Formulário para inserção dos dados
     with st.form("fraud_prediction_form"):
         # Alterando para "Aplicável" e "Não Aplicável" no lugar de True e False
-        iss_retention = st.selectbox("Indica se houve retenção de ISS", options=["Aplicável", "Não Aplicável"])
+        iss_retention = st.selectbox("Retenção de ISS", options=["Aplicável", "Não Aplicável"])
         iss_retention = 1 if iss_retention == "Aplicável" else 0
 
         # Usando o slider para as taxas (garantindo que os valores sejam float)
