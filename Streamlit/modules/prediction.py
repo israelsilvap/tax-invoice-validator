@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-API_URL = "http://127.0.0.1:80/predict/"  # Certifique-se de que a API está rodando na porta 80
+API_URL = "http://18.119.19.95/predict/"  # Certifique-se de que a API está rodando na porta 80
 
 def prediction():
     """
