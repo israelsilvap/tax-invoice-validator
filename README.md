@@ -134,6 +134,11 @@ Resposta:
 
 ---
 
+## Google Colab
+Você pode acessar o notebook do projeto no Google Colab aqui.
+
+---
+
 ## Contribuindo
 
 1. Faça um fork do repositório.
