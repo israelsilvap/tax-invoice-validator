@@ -120,7 +120,7 @@ Resposta:
 
 ```json
 {
-  "fraud": 0
+  "prediction": 0
 }
 ```
 
