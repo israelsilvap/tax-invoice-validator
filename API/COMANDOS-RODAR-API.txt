@@ -1,0 +1,5 @@
+curl -L -o fastapi-app.tar "https://drive.usercontent.google.com/download?id=1_8FCdmkU8S2REnfnXQ-bMjtUjHmHmjGh&export=download&confirm=t&uuid=82a4c599-00f0-4a5b-accb-13858a75f796"
+
+docker load -i fastapi-app.tar
+
+docker run -d -p 80:8000 fastapi-app:latest
