@@ -42,8 +42,8 @@ def prediction():
             # Exibir o resultado da previsão
             st.subheader("Resultado da Previsão")
             if result["fraud"] == 1:
-                st.write("<span style='color:red; font-size:24px;'>Atenção:</span> Nota Inválida.", unsafe_allow_html=True)
+                st.write("<span style='color:red; font-size:24px;'>Atenção: Nota Inválida.</span>", unsafe_allow_html=True)
             else:
-                st.write("<span style='color:green; font-size:24px;'>Seguro:</span> Nota Válida.", unsafe_allow_html=True)
+                st.write("<span style='color:green; font-size:24px;'>Seguro: Nota Válida.</span>", unsafe_allow_html=True)
         except requests.exceptions.RequestException as e:
             st.error(f"Erro na requisição: {e}")
