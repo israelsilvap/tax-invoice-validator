@@ -16,11 +16,27 @@ def prediction():
 
     # Formulário para inserção dos dados
     with st.form("fraud_prediction_form"):
-        iss_retention = st.number_input("ISS Retention", value=0.0, format="%.2f")
-        inss_tax_rate = st.number_input("INSS Tax Rate", value=0.0, format="%.2f")
-        csll_tax_rate = st.number_input("CSLL Tax Rate", value=0.0, format="%.2f")
-        calculated_value = st.number_input("Calculated Value", value=0.0, format="%.2f")
-        cofins_tax_rate = st.number_input("COFINS Tax Rate", value=0.0, format="%.2f")
+        # Alterando para "Aplicável" e "Não Aplicável" no lugar de True e False
+        iss_retention = st.selectbox("Indica se houve retenção de ISS", options=["Aplicável", "Não Aplicável"])
+        iss_retention = 1 if iss_retention == "Aplicável" else 0
+
+        # Usando o slider para as taxas (garantindo que os valores sejam float)
+        iss_tax_rate = st.slider("Taxa de ISS aplicada sobre o valor da nota fiscal", 
+                                 min_value=0.0, max_value=100.0, value=0.0, step=0.1)
+        
+        inss_tax_rate = st.slider("Taxa de INSS aplicada, se for o caso", 
+                                  min_value=0.0, max_value=100.0, value=0.0, step=0.1)
+        
+        csll_tax_rate = st.slider("Taxa de CSLL aplicada, se for o caso", 
+                                  min_value=0.0, max_value=100.0, value=0.0, step=0.1)
+        
+        cofins_tax_rate = st.slider("Taxa de COFINS (Contribuição para o Financiamento da Seguridade Social)", 
+                                    min_value=0.0, max_value=100.0, value=0.0, step=0.1)
+        
+        # O valor total calculado pode ser ajustado conforme necessário
+        calculated_value = st.number_input("Valor total calculado da nota fiscal, incluindo impostos", 
+                                          value=0.0, format="%.2f")
+        
         submit_button = st.form_submit_button("Fazer Previsão")
 
     if submit_button:
@@ -41,7 +57,7 @@ def prediction():
 
             # Exibir o resultado da previsão
             st.subheader("Resultado da Previsão")
-            if result["fraud"] == 1:
+            if result["prediction"] == 1:
                 st.write("<span style='color:red; font-size:24px;'>Atenção: Nota Inválida.</span>", unsafe_allow_html=True)
             else:
                 st.write("<span style='color:green; font-size:24px;'>Seguro: Nota Válida.</span>", unsafe_allow_html=True)
