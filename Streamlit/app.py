@@ -43,4 +43,4 @@ with tab4:
 
 # Rodapé
 st.markdown("---")
-st.write("© 2025 - Projeto de Detecção de Notas Fiscais Fraudulentas")
+st.write("© 2025 - Detecção de Notas Fiscais com Impostos Incorretos")
