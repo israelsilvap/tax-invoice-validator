@@ -135,7 +135,7 @@ Resposta:
 ---
 
 ## Google Colab
-Você pode acessar o notebook do projeto no Google Colab aqui.
+Você pode acessar o notebook do projeto no Google Colab [aqui](https://colab.research.google.com/drive/1dnBPHeDEy3yflbQbv-ZfqcXRM2wXbTZA?usp=sharing).
 
 ---
 
