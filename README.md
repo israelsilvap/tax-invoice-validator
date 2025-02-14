@@ -55,8 +55,8 @@ A organização do projeto está dividida em dois diretórios principais: **API*
 │   ├── modules/
 │   │   ├── data_loading.py     # Carregamento e manipulação de dados
 │   │   ├── eda.py              # Módulo para Análise Exploratória (EDA)
-│   │   ├── fraud_prediction.py # Funções para prever fraude
 │   │   ├── modeling.py         # Modelagem e treino de modelos
+│   │   ├── prediction.py       # Funções para prever com entrada do usuário
 │   │   └── preprocessing.py    # Pré-processamento de dados
 │   ├── app.py                  # Aplicação Streamlit para visualização e interação
 │   └── requirements.txt        # Dependências necessárias para o Streamlit

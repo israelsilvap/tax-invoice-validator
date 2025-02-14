@@ -4,7 +4,7 @@ import requests
 
 API_URL = "http://18.119.19.95/predict"  # Altere para o endpoint correto da sua API
 
-def fraud_prediction():
+def prediction():
     """
     Aba de Previsão de Fraude.
 
@@ -41,7 +41,7 @@ def fraud_prediction():
 
             # Exibir o resultado da previsão
             st.subheader("Resultado da Previsão")
-            if result["fraud"] == 1:
+            if result["prediction"] == 1:
                 st.write("<span style='color:red'>Atenção:</span> Risco de fraude detectado.", unsafe_allow_html=True)
             else:
                 st.write("<span style='color:green'>Seguro:</span> Sem risco de fraude aparente.", unsafe_allow_html=True)

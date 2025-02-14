@@ -40,7 +40,7 @@ def get_prediction(data: PredictionInput):
         y_pred = loaded_model.predict(X_input)
         
         # Retornar resultado
-        return {"fraud": int(y_pred[0])}
+        return {"prediction": int(y_pred[0])}
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro ao processar a previsão: {e}")

@@ -4,7 +4,7 @@ from modules.data_loading import load_data
 from modules.eda import exploratory_data_analysis
 from modules.preprocessing import data_preprocessing
 from modules.modeling import model_training_and_evaluation
-from modules.fraud_prediction import fraud_prediction  
+from Streamlit.modules.prediction import prediction  
 
 # Configuração inicial da página
 st.set_page_config(
@@ -39,7 +39,7 @@ with tab3:
     rf_classifier, preprocessor = model_training_and_evaluation(df)
 with tab4:
     # 📉 Seção 4: Previsão de Fraude
-    fraud_prediction()
+    prediction()
 
 # Rodapé
 st.markdown("---")
