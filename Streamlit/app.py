@@ -27,7 +27,7 @@ st.title("Análise de Notas Fiscais com Impostos Incorretos")
 #     "Escolha a seção",
 #     ["Utilizar Modelo para Predições", "Tratamento dos Dados e Criação do Modelo"]
 # )
-tab1, tab2, tab3, tab4 = st.tabs(["▫️ EDA", "▫️ PreProcessamento", "▫️ Modelagem e Avaliação", "▫️ Previsão de Fraude"])
+tab1, tab2, tab3, tab4 = st.tabs(["📊 Análise Exploratória dos Dados", "⚙️ Pré-processamento dos Dados", "🤖 Modelagem e Avaliação dos Modelos", "🔍 Classificar Nota"])
 with tab1:
     # 📁 Seção 1: Análise Exploratória dos Dados (EDA)
     exploratory_data_analysis(df)

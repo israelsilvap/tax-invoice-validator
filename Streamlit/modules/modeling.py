@@ -79,7 +79,6 @@ def evaluate_model(model, X_val, y_val, model_name):
 
 @st.cache_data
 def model_training_and_evaluation(df_clean):
-    st.header("🤖 Modelagem e Avaliação dos Modelos")
     # -----------------------------------------------------------------------------
     # 📌 Seção 3.1: Divisão de Dados
     # -----------------------------------------------------------------------------
@@ -89,9 +88,6 @@ def model_training_and_evaluation(df_clean):
         - **Como dividir o dataset em treinamento, validação e teste?**  
         - **Por que usar divisão estratificada?**  
         """)
-
-        # Mapear a variável alvo
-        df_clean['class_label'] = df_clean['class_label'].map({'valid': 0, 'not valid': 1})
 
         # Separação em features (X) e alvo (y)
         X = df_clean.drop(columns=['class_label'])
@@ -121,43 +117,43 @@ def model_training_and_evaluation(df_clean):
         """)
 
                 # Criando abas para os modelos
-        tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["▫️ KNN", "▫️ Naive Bayes", "▫️ SVM", "▫️ Árvore de Decisão", "▫️ Random Forest", "▫️ XGBoost"])
+        tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["▫️ KNN", "▫️ SVM", "▫️ Naive Bayes", "▫️ XGBoost", "▫️ Árvore de Decisão", "▫️ Random Forest"])
 
         # Modelo 1: KNN
         with tab1:
             knn_model = KNeighborsClassifier()
             knn_model = train_model(knn_model, X_train, y_train, X_val, y_val)
             evaluate_model(knn_model, X_val, y_val, "KNN")
-
-        # Modelo 2: Naive Bayes
+        
+        # Modelo 2: SVM
         with tab2:
-            nb_model = GaussianNB()
-            nb_model = train_model(nb_model, X_train, y_train, X_val, y_val)
-            evaluate_model(nb_model, X_val, y_val, "Naive Bayes")
-
-        # Modelo 3: SVM
-        with tab3:
             svm_model = SVC(probability=True, random_state=42)
             svm_model = train_model(svm_model, X_train, y_train, X_val, y_val)
             evaluate_model(svm_model, X_val, y_val, "SVM")
 
-        # Modelo 4: Árvore de Decisão
+        # Modelo 3: Naive Bayes
+        with tab3:
+            nb_model = GaussianNB()
+            nb_model = train_model(nb_model, X_train, y_train, X_val, y_val)
+            evaluate_model(nb_model, X_val, y_val, "Naive Bayes")
+
+        # Modelo 4: XGBoost
         with tab4:
+            bst = XGBClassifier(random_state=42, n_jobs=-1)
+            bst = train_model(bst, X_train, y_train, X_val, y_val)
+            evaluate_model(bst, X_val, y_val, "XGBoost")
+
+        # Modelo 5: Árvore de Decisão
+        with tab5:
             dt_model = DecisionTreeClassifier(random_state=42)
             dt_model = train_model(dt_model, X_train, y_train, X_val, y_val)
             evaluate_model(dt_model, X_val, y_val, "Árvore de Decisão")
 
-        # Modelo 5: Random Forest
-        with tab5:
+        # Modelo 6: Random Forest
+        with tab6:
             rf_model = RandomForestClassifier(random_state=42, n_jobs=-1)
             rf_model = train_model(rf_model, X_train, y_train, X_val, y_val)
             evaluate_model(rf_model, X_val, y_val, "Random Forest")
-
-        # Modelo 6: XGBoost
-        with tab6:
-            bst = XGBClassifier(random_state=42, n_jobs=-1)
-            bst = train_model(bst, X_train, y_train, X_val, y_val)
-            evaluate_model(bst, X_val, y_val, "XGBoost")
 
     # =============================================================================
     # 🏋️ Seção 3.3: Balanceamento de Dados e Re-treinamento dos Modelos
@@ -205,9 +201,9 @@ def model_training_and_evaluation(df_clean):
 
         # Exibir resumo das divisões
         col1, col2, col3 = st.columns(3)
-        col1.metric("- Treino", f"{len(X_train)} ({(len(X_train) / len(X) * 100):.2f}%)")
-        col2.metric("- Validação", f"{len(X_val)} ({(len(X_val) / len(X) * 100):.2f}%)")
-        col3.metric("- Teste", f"{len(X_test)} ({(len(X_test) / len(X) * 100):.2f}%)")
+        col1.metric("▫️ Treino", f"{len(X_train)} ({(len(X_train) / len(X) * 100):.2f}%)")
+        col2.metric("▫️ Validação", f"{len(X_val)} ({(len(X_val) / len(X) * 100):.2f}%)")
+        col3.metric("▫️ Teste", f"{len(X_test)} ({(len(X_test) / len(X) * 100):.2f}%)")
 
         # -------------------------------------------------------------------------
         # 📌 Re-treinamento dos Modelos
@@ -215,43 +211,44 @@ def model_training_and_evaluation(df_clean):
         st.subheader("📊 **Re-treinamento dos Modelos**")
 
         # Criando abas para os modelos
-        tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["▫️ KNN", "▫️ Naive Bayes", "▫️ SVM", "▫️ Árvore de Decisão", "▫️ Random Forest", "▫️ XGBoost"])
+        tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["▫️ SVM", "▫️ KNN",  "▫️ Naive Bayes", "▫️ XGBoost", "▫️ Árvore de Decisão", "▫️ Random Forest"])
 
-        # Modelo 1: KNN
+        # Modelo 1: SVM
         with tab1:
-            knn_model = KNeighborsClassifier(n_jobs=-1)
-            knn_model = train_model(knn_model, X_train, y_train, X_val, y_val)
-            evaluate_model(knn_model, X_val, y_val, "KNN")
-
-        # Modelo 2: Naive Bayes
-        with tab2:
-            nb_model = GaussianNB()
-            nb_model = train_model(nb_model, X_train, y_train, X_val, y_val)
-            evaluate_model(nb_model, X_val, y_val, "Naive Bayes")
-
-        # Modelo 3: SVM
-        with tab3:
             svm_model = SVC(probability=True, random_state=42)
             svm_model = train_model(svm_model, X_train, y_train, X_val, y_val)
             evaluate_model(svm_model, X_val, y_val, "SVM")
 
-        # Modelo 4: Árvore de Decisão
+        # Modelo 2: KNN
+        with tab2:
+            knn_model = KNeighborsClassifier(n_jobs=-1)
+            knn_model = train_model(knn_model, X_train, y_train, X_val, y_val)
+            evaluate_model(knn_model, X_val, y_val, "KNN")
+
+        # Modelo 3: Naive Bayes
+        with tab3:
+            nb_model = GaussianNB()
+            nb_model = train_model(nb_model, X_train, y_train, X_val, y_val)
+            evaluate_model(nb_model, X_val, y_val, "Naive Bayes")
+
+        # Modelo 4: XGBoost
         with tab4:
+            bst = XGBClassifier(random_state=42, n_jobs=-1)
+            bst = train_model(bst, X_train, y_train, X_val, y_val)
+            evaluate_model(bst, X_val, y_val, "XGBoost")
+
+        # Modelo 5: Árvore de Decisão
+        with tab5:
             dt_model = DecisionTreeClassifier(random_state=42)
             dt_model = train_model(dt_model, X_train, y_train, X_val, y_val)
             evaluate_model(dt_model, X_val, y_val, "Árvore de Decisão")
 
-        # Modelo 5: Random Forest
-        with tab5:
+        # Modelo 6: Random Forest
+        with tab6:
             rf_model = RandomForestClassifier(random_state=42, n_jobs=-1)
             rf_model = train_model(rf_model, X_train, y_train, X_val, y_val)
             evaluate_model(rf_model, X_val, y_val, "Random Forest")
 
-        # Modelo 6: XGBoost
-        with tab6:
-            bst = XGBClassifier(random_state=42, n_jobs=-1)
-            bst = train_model(bst, X_train, y_train, X_val, y_val)
-            evaluate_model(bst, X_val, y_val, "XGBoost")
 
     # =============================================================================
     # 🔍 Seção 3.4: Importância das Features
@@ -294,6 +291,7 @@ def model_training_and_evaluation(df_clean):
             ax.set_yticks(range(len(sorted_idx)))
             ax.set_yticklabels([feature_names[i] for i in sorted_idx])
             ax.set_title("Top 10 Features Mais Importantes - Random Forest")
+            ax.set_xlabel('Importância', fontsize=12)
             st.pyplot(fig)
 
         # -------------------------------------------------------------------------
@@ -301,7 +299,7 @@ def model_training_and_evaluation(df_clean):
         # -------------------------------------------------------------------------
         with col2:
             st.markdown("### 📌 **ANOVA F-Score**")
-            fig, ax = plt.subplots(figsize=(7, 5.4))
+            fig, ax = plt.subplots(figsize=(7, 5))
             x = np.arange(len(anova_scores))
             y = anova_scores.values
             ax.barh(x, y, color='lightcoral')
@@ -369,25 +367,25 @@ def model_training_and_evaluation(df_clean):
         X_test_filtered = X_test[selected_features]  # Não se esqueça de filtrar o conjunto de teste também!
 
         # Criando abas para os modelos
-        tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["▫️ KNN", "▫️ Naive Bayes", "▫️ SVM", "▫️ Árvore de Decisão", "▫️ Random Forest", "▫️ XGBoost"])
+        tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["▫️ Naive Bayes", "▫️ SVM", "▫️ KNN", "▫️ Árvore de Decisão", "▫️ Random Forest", "▫️ XGBoost"])
 
-        # Modelo 1: KNN
+        # Modelo 1: Naive Bayes
         with tab1:
-            knn_model = KNeighborsClassifier(n_jobs=-1)
-            knn_model = train_model(knn_model, X_train_filtered, y_train, X_val_filtered, y_val)
-            evaluate_model(knn_model, X_val_filtered, y_val, "KNN")
-
-        # Modelo 2: Naive Bayes
-        with tab2:
             nb_model = GaussianNB()
             nb_model = train_model(nb_model, X_train_filtered, y_train, X_val_filtered, y_val)
             evaluate_model(nb_model, X_val_filtered, y_val, "Naive Bayes")
 
-        # Modelo 3: SVM
-        with tab3:
+        # Modelo 2: SVM
+        with tab2:
             svm_model = SVC(probability=True, random_state=42)
             svm_model = train_model(svm_model, X_train_filtered, y_train, X_val_filtered, y_val)
             evaluate_model(svm_model, X_val_filtered, y_val, "SVM")
+        
+        # Modelo 3: KNN
+        with tab3:
+            knn_model = KNeighborsClassifier(n_jobs=-1)
+            knn_model = train_model(knn_model, X_train_filtered, y_train, X_val_filtered, y_val)
+            evaluate_model(knn_model, X_val_filtered, y_val, "KNN")
 
         # Modelo 4: Árvore de Decisão
         with tab4:
@@ -417,6 +415,7 @@ def model_training_and_evaluation(df_clean):
         - **Qual a performance final do melhor modelo no conjunto de teste independente?**  
         """)
 
+        st.subheader("▫️ **Random Forest**")
         # Escolhendo o melhor modelo (exemplo: Random Forest)
         best_model = rf_model  
         X_test_filtered = X_test[selected_features]

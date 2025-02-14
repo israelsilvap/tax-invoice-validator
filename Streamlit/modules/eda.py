@@ -7,7 +7,6 @@ from sklearn.preprocessing import LabelEncoder
 
 @st.cache_data
 def exploratory_data_analysis(df):
-    st.header("📊 Análise Exploratória dos Dados")
     
     # Seção 1.1: Estrutura do Dataset
     with st.expander("📁 **Estrutura do Dataset**", expanded=False):
@@ -22,37 +21,46 @@ def exploratory_data_analysis(df):
         with col1:
             st.markdown("#### 🔍 **Amostra dos Dados:**")
             numeric_cols = df.select_dtypes(include=[np.number]).columns
-            st.dataframe(df[numeric_cols].head().style.format("{:.2f}"), height=250)
+            st.dataframe(df.head(), height=250)
         with col2:
             st.markdown("#### 📊 **Total de Observações**")
             st.metric("📊 Total de Registros", df.shape[0])
             st.metric("📂 Total de Variáveis", df.shape[1])
         with col3:
-            st.markdown("#### 🛠 **Tipos de Dados:**")
-            dtype_counts = df.dtypes.value_counts().reset_index()
-            dtype_counts.columns = ['Tipo', 'Contagem']
-            st.dataframe(dtype_counts, hide_index=True)
+            st.markdown("#### 🛠 **Tipos de Dados e Valores Ausentes:**")
+            missing_data = pd.DataFrame({
+                'Tipo': df.dtypes,
+                'Valores Ausentes': df.isnull().sum(),
+                '% Ausentes': (df.isnull().mean() * 100).round(2)
+            })
+
+            # Exibindo os dados no Streamlit
+            st.dataframe(missing_data, hide_index=False)
+
     
     # Seção 1.2: Distribuição das Notas Fiscais
     with st.expander("🧾 **Distribuição das Notas Fiscais**", expanded=False):
-        st.markdown("""
-        ### ❓ **Perguntas-chave**  
-        - Como as notas fiscais estão distribuídas entre válidas e inválidas?  
-        - Qual a porcentagem de cada classe?  
-        """)
-        st.markdown("### 📊 **Distribuição das Notas Fiscais**")
-        fig, ax = plt.subplots(figsize=(10, 5))
-        sns.countplot(x='class_label', data=df, order=['valid', 'not valid'], ax=ax)
-        ax.set_title('Distribuição de Notas Fiscais Válidas vs. Inválidas', fontsize=14)
-        ax.set_xlabel('Classificação')
-        ax.set_ylabel('Contagem')
-        total = len(df)
-        for p in ax.patches:
-            percentage = f'{100 * p.get_height()/total:.1f}%'
-            x = p.get_x() + p.get_width() / 2
-            y = p.get_height() + 10
-            ax.annotate(percentage, (x, y), ha='center')
-        st.pyplot(fig)
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown("""
+            ### ❓ **Perguntas-chave**  
+            - Como as notas fiscais estão distribuídas entre válidas e inválidas?  
+            - Qual a porcentagem de cada classe?  
+            """)
+        with col2:
+            st.markdown("### 📊 **Distribuição das Notas Fiscais**")
+            fig, ax = plt.subplots(figsize=(10, 5))
+            sns.countplot(x='class_label', data=df, order=['valid', 'not valid'], ax=ax)
+            ax.set_title('Distribuição de Notas Fiscais Válidas vs. Inválidas', fontsize=14)
+            ax.set_xlabel('Classificação')
+            ax.set_ylabel('Contagem')
+            total = len(df)
+            for p in ax.patches:
+                percentage = f'{100 * p.get_height()/total:.1f}%'
+                x = p.get_x() + p.get_width() / 2
+                y = p.get_height() + 10
+                ax.annotate(percentage, (x, y), ha='center')
+            st.pyplot(fig)
     
     # Seção 1.3: Análise das Variáveis Numéricas
     with st.expander("📊 **Distribuição das Variáveis Numéricas**", expanded=False):
@@ -93,33 +101,12 @@ def exploratory_data_analysis(df):
             order = df['state'].value_counts().index
             sns.countplot(x='state', hue='class_label', data=df, order=order, ax=ax)
             ax.set_title('Validade das Notas por Estado', fontsize=14)
+            ax.set_xlabel('Estado', fontsize=12)
+            ax.set_ylabel('Quantidade', fontsize=12)
             ax.set_xticklabels(ax.get_xticklabels(), rotation=45)
-            ax.legend(title='Status')
+            ax.legend(title='Classificação das Notas', labels=['Válidas', 'Inválidas'])
             st.pyplot(fig)
     
-    # # Seção 1.5: Análise Temporal
-    # with st.expander("📆 **Análise Temporal**", expanded=False):
-    #     col1, col2 = st.columns([0.9, 1])
-    #     with col1:
-    #         st.markdown("""
-    #         ### ❓ **Perguntas-chave**  
-    #         - Como as notas válidas e inválidas evoluíram ao longo do tempo?  
-    #         """)
-    #     with col2:
-    #         df['issue_date'] = pd.to_datetime(df['issue_date'])
-    #         df['ano'] = df['issue_date'].dt.year
-    #         df['mes'] = df['issue_date'].dt.month
-    #         invalid_notes = df[df['class_label'] == 'not valid'].groupby(['ano', 'mes']).size().reset_index(name='count')
-    #         valid_notes = df[df['class_label'] == 'valid'].groupby(['ano', 'mes']).size().reset_index(name='count')
-    #         st.markdown("### 📈 **Evolução Mensal de Notas Válidas e Inválidas**")
-    #         fig, ax = plt.subplots(figsize=(14, 6))
-    #         sns.lineplot(data=invalid_notes, x='mes', y='count', hue='ano', marker='o', ax=ax)
-    #         sns.lineplot(data=valid_notes, x='mes', y='count', hue='ano', marker='o', ax=ax)
-    #         ax.set_title('Evolução Mensal de Notas Válidas vs. Inválidas', fontsize=14)
-    #         ax.set_xlabel('Mês')
-    #         ax.set_ylabel('Quantidade de Notas')
-    #         ax.legend(title='Ano', labels=['Inválidas', 'Válidas'])
-    #         st.pyplot(fig)
     
     # Seção 1.6: Matriz de Correlação
     with st.expander("🔗 **Matriz de Correlação entre Variáveis**", expanded=False):
