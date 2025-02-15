@@ -3,7 +3,11 @@
 Este projeto tem como objetivo detectar notas fiscais com impostos incorretos utilizando técnicas de Machine Learning. A solução é composta por duas partes principais:
 
 1. **API** (com FastAPI) para disponibilizar o modelo de forma escalável.  
-2. **Aplicação Streamlit** para análise de dados, visualização e testes interativos.
+2. **[Aplicação Streamlit](https://dataapp-accident-analysis.streamlit.app/)** para análise de dados, visualização e testes interativos.
+<img src="\img\app.png" style="height:25rem;" />
+
+## Google Colab
+Você pode acessar o notebook do projeto no Google Colab [aqui](https://colab.research.google.com/drive/1dnBPHeDEy3yflbQbv-ZfqcXRM2wXbTZA?usp=sharing).
 
 ---
 
@@ -16,7 +20,6 @@ Este projeto tem como objetivo detectar notas fiscais com impostos incorretos ut
   - [Executando a API](#executando-a-api)
   - [Executando a Aplicação Streamlit](#executando-a-aplicação-streamlit)
 - [Como Usar](#como-usar)
-  - [Fluxo da Aplicação Streamlit](#fluxo-da-aplicação-streamlit)
   - [Uso da API](#uso-da-api)
 - [Contribuindo](#contribuindo)
 - [Licença](#licença)
@@ -132,10 +135,6 @@ Resposta:
 }
 ```
 
----
-
-## Google Colab
-Você pode acessar o notebook do projeto no Google Colab [aqui](https://colab.research.google.com/drive/1dnBPHeDEy3yflbQbv-ZfqcXRM2wXbTZA?usp=sharing).
 
 ---
 
