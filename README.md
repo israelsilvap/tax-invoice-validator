@@ -7,7 +7,7 @@ Este projeto tem como objetivo detectar notas fiscais com impostos incorretos ut
 <img src="\img\app.png" style="height:25rem;" />
 
 ## Google Colab
-Você pode acessar o notebook do projeto no Google Colab [aqui](https://colab.research.google.com/drive/1dnBPHeDEy3yflbQbv-ZfqcXRM2wXbTZA?usp=sharing).
+Você pode acessar o notebook do projeto no [Google Colab](https://colab.research.google.com/drive/1dnBPHeDEy3yflbQbv-ZfqcXRM2wXbTZA?usp=sharing).
 
 ---
 
